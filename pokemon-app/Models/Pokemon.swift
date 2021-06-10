@@ -21,6 +21,10 @@ struct Pokemon: Codable {
         case types
         case images = "sprites"
     }
+    
+    public var allImages: [String] {
+        return [images.front_default, images.front_shiny, images.back_default, images.back_shiny, images.other.prettyImage.front_default]
+    }
 }
 
 // MARK: - Stat

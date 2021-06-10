@@ -41,4 +41,25 @@ class PokemonService {
             }
         }
     }
+    
+    func writePokemon(pokemonList: [Pokemon]) {
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(pokemonList)
+            FileManager.default.createFile(atPath: FileManager.pokemonUrlPath.path, contents: encodedData)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func readPokemon() -> Result<[Pokemon],Error> {
+        do {
+            let decoder = JSONDecoder()
+            let data = try Data(contentsOf: FileManager.pokemonUrlPath)
+            let decodedData = try decoder.decode([Pokemon].self, from: data)
+            return .success(decodedData)
+        } catch {
+            return .failure(error)
+        }
+    }
 }

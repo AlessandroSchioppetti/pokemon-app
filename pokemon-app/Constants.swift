@@ -7,13 +7,24 @@
 
 import Foundation
 
-enum Api {
+public enum Api {
     case pokemonList
     
     var path: String {
         switch self {
         case .pokemonList:
             return "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
+        }
+    }
+}
+
+public enum FileName {
+    case pokemon
+    
+    var name: String {
+        switch self {
+        case .pokemon:
+            return "pokemon.json"
         }
     }
 }
