@@ -9,11 +9,21 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        PokemonService.shared.getPokemon { result in
+            switch result {
+            case .success(let pokemonList):
+                pokemonList.forEach {
+                    print($0.name)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         return true
     }
-
 }
 
