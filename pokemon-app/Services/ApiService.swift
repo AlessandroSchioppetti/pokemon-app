@@ -5,29 +5,42 @@
 //  Created by Alessandro Schioppetti on 10/06/2021.
 //
 
-import Foundation
+import UIKit
 
 class ApiService {
     static let shared: ApiService = ApiService()
     
-    func getRequest<T: Codable>(urlString: String, type: T.Type, completion: @escaping (Result<T,Error>) -> Void) {
+    func getCodable<T: Codable>(ofType: T.Type, from urlString: String, completion: @escaping (Result<T,Error>) -> Void) {
+        getRequest(from: urlString) { result in
+            switch result {
+            case .success(let data):
+                let decoder = JSONDecoder()
+                do {
+                    let result = try decoder.decode(T.self, from: data)
+                    completion(.success(result))
+                } catch {
+                    completion(.failure(error))
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    func getImage(from url: URL) -> [UIImage] {
+        return [UIImage()]
+    }
+    
+    func getRequest(from urlString: String, completion: @escaping ((Result<Data,Error>) -> Void)) {
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) { (data, response, error) in
-                
                 if let error = error {
-                    print(error.localizedDescription)
+                    completion(.failure(error))
                     return
                 }
-                
-                if let dataIn = data {
-                    let decoder = JSONDecoder()
-                    do {
-                        let result = try decoder.decode(T.self, from: dataIn)
-                        completion(.success(result))
-                    } catch {
-                        completion(.failure(error))
-                    }
+                if let data = data {
+                    completion(.success(data))
                 }
             }
             task.resume()

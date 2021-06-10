@@ -14,15 +14,14 @@ class PokemonService {
     private var pokemonList: [Pokemon] = []
     
     func getPokemon(completion: @escaping getPkCompletion) {
-        ApiService.shared.getRequest(urlString: Api.pokemonList.path,
-                       type: PokemonPreviewList.self) { result in
+        ApiService.shared.getCodable(ofType: PokemonPreviewList.self, from: Api.pokemonList.path) { result in
             
             switch result {
             case .success(let pokemonPreviewList):
                 let group = DispatchGroup()
                 pokemonPreviewList.results.forEach { pokemonPreview in
                     group.enter()
-                    ApiService.shared.getRequest(urlString: pokemonPreview.url, type: Pokemon.self) { result in
+                    ApiService.shared.getCodable(ofType: Pokemon.self, from: pokemonPreview.url) { result in
                         
                         switch result {
                         case .success(let pokemon):
@@ -60,6 +59,14 @@ class PokemonService {
             return .success(decodedData)
         } catch {
             return .failure(error)
+        }
+    }
+    
+    func writePokemonImages(from pokemonList: [Pokemon]) {
+        pokemonList.forEach {
+            $0.allImages.forEach { image in
+                
+            }
         }
     }
 }

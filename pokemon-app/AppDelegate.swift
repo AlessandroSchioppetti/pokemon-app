@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             switch result {
             case .success(let pokemonList):
                 PokemonService.shared.writePokemon(pokemonList: pokemonList)
-//                PokemonService.shared.writePokemonImages(from: pokemonList)
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
