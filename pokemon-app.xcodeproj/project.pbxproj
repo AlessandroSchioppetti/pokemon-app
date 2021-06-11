@@ -20,6 +20,8 @@
 		CAB6A2D2267245A3008094FD /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2D1267245A3008094FD /* ApiService.swift */; };
 		CAB6A2DA2672479E008094FD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2D92672479E008094FD /* Constants.swift */; };
 		CAB6A2EC26726AAF008094FD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2EB26726AAF008094FD /* URL.swift */; };
+		CAF086702673D4AF00AAC17B /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF0866F2673D4AF00AAC17B /* SplashViewController.swift */; };
+		CAF086752673D9F000AAC17B /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF086742673D9F000AAC17B /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		CAB6A2D1267245A3008094FD /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		CAB6A2D92672479E008094FD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		CAB6A2EB26726AAF008094FD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
+		CAF0866F2673D4AF00AAC17B /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		CAF086742673D9F000AAC17B /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +149,7 @@
 		CAB6A2B2267120BA008094FD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CAF0866F2673D4AF00AAC17B /* SplashViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 			isa = PBXGroup;
 			children = (
 				CAB6A2EB26726AAF008094FD /* URL.swift */,
+				CAF086742673D9F000AAC17B /* UIView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -313,9 +319,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF086752673D9F000AAC17B /* UIView.swift in Sources */,
 				CAB6A2CC267244CD008094FD /* PokemonService.swift in Sources */,
 				CAB6A2BC26712329008094FD /* PokemonPreview.swift in Sources */,
 				CAB6A2D2267245A3008094FD /* ApiService.swift in Sources */,
+				CAF086702673D4AF00AAC17B /* SplashViewController.swift in Sources */,
 				CAB6A2C4267127E7008094FD /* Pokemon.swift in Sources */,
 				CAB6A2DA2672479E008094FD /* Constants.swift in Sources */,
 				CAB6A278267113AF008094FD /* AppDelegate.swift in Sources */,

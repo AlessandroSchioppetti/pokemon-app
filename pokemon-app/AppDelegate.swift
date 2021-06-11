@@ -10,28 +10,26 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        window = UIWindow(frame: UIScreen.main.bounds)
         
-        PokemonService.shared.getPokemon { result in
-            switch result {
-            case .success(let list):
-                for (index, p) in list.enumerated() {
-                    print(index, p.name)
-                }
-                PokemonService.shared.getPokemonImages(from: list) { result in
-                    switch result {
-                    case .success((let allPkImages, let allPkProfileImages)):
-                        PokemonService.shared.writePkImges(allPkImages: allPkImages,
-                                                           allPkProfileImages: allPkProfileImages)
-                    case .failure(let error):
-                        print(error)
-                    }
-                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+        let splashController: SplashViewController = SplashViewController()
+        splashController.delegate = self
+        
+        window?.rootViewController = splashController
+        window?.makeKeyAndVisible()
         return true
     }
 }
+
+// MARK: - SplashViewControllerDelegate
+extension AppDelegate: SplashViewControllerDelegate {
+    func didFinishLoading() {
+        print(#function)
+    }
+}
+
+
 

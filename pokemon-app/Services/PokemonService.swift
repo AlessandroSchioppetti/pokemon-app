@@ -14,6 +14,34 @@ class PokemonService {
     static let shared = PokemonService()
     private var pokemonList: [Pokemon] = []
     
+    func getAndSavePokemon(completion: @escaping getPkCompletion) {
+        PokemonService.shared.getPokemon { result in
+            switch result {
+            case .success(let list):
+                if let error = PokemonService.shared.writePokemon(pokemonList: list) {
+                    completion(.failure(error))
+                    return
+                }
+                PokemonService.shared.getPokemonImages(from: list) { result in
+                    switch result {
+                    case .success((let allPkImages, let allPkProfileImages)):
+                        PokemonService.shared.writePkImges(allPkImages: allPkImages,
+                                                           allPkProfileImages: allPkProfileImages)
+                        completion(.success(list))
+                    case .failure(let error):
+                        completion(.failure(error))
+                        return
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
+
+// MARK: - private
+private extension PokemonService {
     // MARK: - network operation
     func getPokemon(completion: @escaping getPkCompletion) {
         ApiService.shared.getCodable(ofType: PokemonPreviewList.self, from: Api.pokemonList.path) { result in
@@ -117,10 +145,7 @@ class PokemonService {
             writeImage(image: dict.value, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent("profileImages"))
         }
     }
-}
-
-// MARK: - private
-private extension PokemonService {
+    
     func writeImage(image: UIImage, to urlPath: URL) {
         if let data = image.pngData() {
             do {
