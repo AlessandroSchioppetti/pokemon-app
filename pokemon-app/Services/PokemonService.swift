@@ -14,12 +14,12 @@ class PokemonService {
     static let shared = PokemonService()
     private var pokemonList: [Pokemon] = []
     
-    func getAndSavePokemon(completion: @escaping getPkCompletion) {
+    func getAndSavePokemon(completion: @escaping (Error?) -> Void) {
         PokemonService.shared.getPokemon { result in
             switch result {
             case .success(let list):
                 if let error = PokemonService.shared.writePokemon(pokemonList: list) {
-                    completion(.failure(error))
+                    completion(error)
                     return
                 }
                 PokemonService.shared.getPokemonImages(from: list) { result in
@@ -27,16 +27,21 @@ class PokemonService {
                     case .success((let allPkImages, let allPkProfileImages)):
                         PokemonService.shared.writePkImges(allPkImages: allPkImages,
                                                            allPkProfileImages: allPkProfileImages)
-                        completion(.success(list))
+                        self.pokemonList = list
+                        completion(nil)
                     case .failure(let error):
-                        completion(.failure(error))
+                        completion(error)
                         return
                     }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                completion(error)
             }
         }
+    }
+    
+    func getPokemonList() -> [Pokemon] {
+        pokemonList
     }
 }
 
