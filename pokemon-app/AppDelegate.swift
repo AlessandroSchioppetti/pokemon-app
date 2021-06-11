@@ -18,7 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 for (index, p) in list.enumerated() {
                     print(index, p.name)
                 }
-                PokemonService.shared.getPokemonImages(from: list)
+                PokemonService.shared.getPokemonImages(from: list) { result in
+                    switch result {
+                    case .success((let pkImgList, let pkImgProfileList)):
+                        print(pkImgList)
+                        print("\n")
+                        print(pkImgProfileList)
+                    case .failure(let error):
+                        print(error)
+                    }
+                }
             case .failure(let error):
                 print(error)
             }

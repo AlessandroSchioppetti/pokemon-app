@@ -9,6 +9,7 @@ import UIKit
 
 class PokemonService {
     typealias getPkCompletion = (Result<[Pokemon],Error>) -> Void
+    typealias getPkImagesCompletion = ((Result<([String: [UIImage]],[String: UIImage]),Error>) -> Void)
     
     static let shared = PokemonService()
     private var pokemonList: [Pokemon] = []
@@ -46,7 +47,7 @@ class PokemonService {
         }
     }
     
-    func getPokemonImages(from pokemonList: [Pokemon]) {
+    func getPokemonImages(from pokemonList: [Pokemon], completion: @escaping getPkImagesCompletion) {
         var pkImageList: [String: [UIImage]] = [:]
         var pkImageProfileList: [String: UIImage] = [:]
         
@@ -72,14 +73,14 @@ class PokemonService {
                             imageGroup.leave()
                         }
                     case .failure(let error):
-                        print(error)
+                        completion(.failure(error))
                         imageGroup.leave()
                     }
                 }
             }
         }
         imageGroup.notify(queue: .main) {
-            
+            return completion(.success((pkImageList, pkImageProfileList)))
         }
     }
     
