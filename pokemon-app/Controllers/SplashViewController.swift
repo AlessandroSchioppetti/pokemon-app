@@ -25,7 +25,7 @@ class SplashViewController: UIViewController {
 // MARK: - private
 private extension SplashViewController {
     func setupView() {
-        view.backgroundColor = .red
+        view.backgroundColor = ColorLayout.lightRed
         view.add(logoImageView)
         
         logoImageView.contentMode = .scaleAspectFit
@@ -33,8 +33,8 @@ private extension SplashViewController {
         
         
         NSLayoutConstraint.activate([
-            logoImageView.heightAnchor.constraint(equalToConstant: 50),
-            logoImageView.widthAnchor.constraint(equalToConstant: 200),
+            logoImageView.heightAnchor.constraint(equalToConstant: 100),
+            logoImageView.widthAnchor.constraint(equalToConstant: 300),
             logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
