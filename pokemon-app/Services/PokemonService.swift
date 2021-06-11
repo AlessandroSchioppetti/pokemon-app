@@ -48,21 +48,26 @@ class PokemonService {
     
     func getPokemonImages(from pokemonList: [Pokemon]) {
         var pkImageList: [String: [UIImage]] = [:]
+        var pkImageProfileList: [String: UIImage] = [:]
         
         let imageGroup = DispatchGroup()
         let imageQueue = DispatchQueue(label: "imageQueue")
         
         pokemonList.forEach { pokemon in
-            pokemon.allImages.forEach {
+            pokemon.allImages.forEach { urlString in
                 imageGroup.enter()
-                ApiService.shared.getImage(from: $0) { result in
+                ApiService.shared.getImage(from: urlString) { result in
                     switch result {
                     case .success(let image):
                         imageQueue.async {
-                            if let _ = pkImageList[pokemon.name] {
-                                pkImageList[pokemon.name]?.append(image)
+                            if urlString == pokemon.images.other.prettyImage.front_default {
+                                pkImageProfileList[pokemon.name] = image
                             } else {
-                                pkImageList[pokemon.name] = [image]
+                                if let _ = pkImageList[pokemon.name] {
+                                    pkImageList[pokemon.name]?.append(image)
+                                } else {
+                                    pkImageList[pokemon.name] = [image]
+                                }
                             }
                             imageGroup.leave()
                         }
@@ -74,13 +79,7 @@ class PokemonService {
             }
         }
         imageGroup.notify(queue: .main) {
-            pkImageList.forEach { dict in
-                print(dict.key)
-                for img in dict.value {
-                    print(img)
-                }
-                print("\n")
-            }
+            
         }
     }
     

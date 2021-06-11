@@ -23,7 +23,11 @@ struct Pokemon: Codable {
     }
     
     public var allImages: [String] {
-        return [images.front_default, images.front_shiny, images.back_default, images.back_shiny, images.other.prettyImage.front_default]
+        return [images.front_default,
+                images.front_shiny,
+                images.back_default,
+                images.back_shiny,
+                images.other.prettyImage.front_default]
     }
 }
 
