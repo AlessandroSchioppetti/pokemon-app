@@ -27,8 +27,16 @@ class ApiService {
         }
     }
     
-    func getImage(from url: URL) -> [UIImage] {
-        return [UIImage()]
+    func getImage(from urlString: String, completion: @escaping (Result<UIImage,Error>) -> Void) {
+        getRequest(from: urlString) { result in
+            switch result {
+            case .success(let data):
+                let image = UIImage(data: data)!
+                completion(.success(image))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
     }
     
     func getRequest(from urlString: String, completion: @escaping ((Result<Data,Error>) -> Void)) {

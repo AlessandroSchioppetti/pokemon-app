@@ -14,14 +14,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         PokemonService.shared.getPokemon { result in
             switch result {
-            case .success(let pokemonList):
-                PokemonService.shared.writePokemon(pokemonList: pokemonList)
-                
+            case .success(let list):
+                for (index, p) in list.enumerated() {
+                    print(index, p.name)
+                }
+                PokemonService.shared.getPokemonImages(from: list)
             case .failure(let error):
-                print(error.localizedDescription)
+                print(error)
             }
         }
-        
         return true
     }
 }

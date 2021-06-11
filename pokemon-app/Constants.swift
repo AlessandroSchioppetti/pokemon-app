@@ -13,7 +13,7 @@ public enum Api {
     var path: String {
         switch self {
         case .pokemonList:
-            return "https://pokeapi.co/api/v2/pokemon?offset=20&limit=20"
+            return "https://pokeapi.co/api/v2/pokemon?offset=20&limit=5"
         }
     }
 }
