@@ -19,7 +19,7 @@
 		CAB6A2CC267244CD008094FD /* PokemonService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2CB267244CD008094FD /* PokemonService.swift */; };
 		CAB6A2D2267245A3008094FD /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2D1267245A3008094FD /* ApiService.swift */; };
 		CAB6A2DA2672479E008094FD /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2D92672479E008094FD /* Constants.swift */; };
-		CAB6A2EC26726AAF008094FD /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2EB26726AAF008094FD /* FileManager.swift */; };
+		CAB6A2EC26726AAF008094FD /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB6A2EB26726AAF008094FD /* URL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +58,7 @@
 		CAB6A2CB267244CD008094FD /* PokemonService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonService.swift; sourceTree = "<group>"; };
 		CAB6A2D1267245A3008094FD /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		CAB6A2D92672479E008094FD /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		CAB6A2EB26726AAF008094FD /* FileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		CAB6A2EB26726AAF008094FD /* URL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +178,7 @@
 		CAB6A2D026724563008094FD /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				CAB6A2EB26726AAF008094FD /* FileManager.swift */,
+				CAB6A2EB26726AAF008094FD /* URL.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -319,7 +319,7 @@
 				CAB6A2C4267127E7008094FD /* Pokemon.swift in Sources */,
 				CAB6A2DA2672479E008094FD /* Constants.swift in Sources */,
 				CAB6A278267113AF008094FD /* AppDelegate.swift in Sources */,
-				CAB6A2EC26726AAF008094FD /* FileManager.swift in Sources */,
+				CAB6A2EC26726AAF008094FD /* URL.swift in Sources */,
 				CAB6A2B72671211E008094FD /* PokemonPreviewList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

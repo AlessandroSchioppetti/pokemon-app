@@ -20,10 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 PokemonService.shared.getPokemonImages(from: list) { result in
                     switch result {
-                    case .success((let pkImgList, let pkImgProfileList)):
-                        print(pkImgList)
-                        print("\n")
-                        print(pkImgProfileList)
+                    case .success((let allPkImages, let allPkProfileImages)):
+                        PokemonService.shared.writePkImges(allPkImages: allPkImages,
+                                                           allPkProfileImages: allPkProfileImages)
                     case .failure(let error):
                         print(error)
                     }

@@ -85,24 +85,52 @@ class PokemonService {
     }
     
     // MARK: - local operation
-    func writePokemon(pokemonList: [Pokemon]) {
+    func writePokemon(pokemonList: [Pokemon]) -> Error? {
         do {
             let encoder = JSONEncoder()
             let encodedData = try encoder.encode(pokemonList)
-            FileManager.default.createFile(atPath: FileManager.pokemonUrlPath.path, contents: encodedData)
+            FileManager.default.createFile(atPath: URL.pokemonUrlPath.path, contents: encodedData)
+            return nil
         } catch {
-            print(error)
+            return error
         }
     }
     
     func readPokemon() -> Result<[Pokemon],Error> {
         do {
             let decoder = JSONDecoder()
-            let data = try Data(contentsOf: FileManager.pokemonUrlPath)
+            let data = try Data(contentsOf: URL.pokemonUrlPath)
             let decodedData = try decoder.decode([Pokemon].self, from: data)
             return .success(decodedData)
         } catch {
             return .failure(error)
+        }
+    }
+    
+    func writePkImges(allPkImages: [String: [UIImage]], allPkProfileImages: [String: UIImage]) {
+        allPkImages.forEach { dict in
+            dict.value.forEach { image in
+                writeImage(image: image, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent("frontBackImages"))
+            }
+        }
+        allPkProfileImages.forEach { dict in
+            writeImage(image: dict.value, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent("profileImages"))
+        }
+    }
+}
+
+// MARK: - private
+private extension PokemonService {
+    func writeImage(image: UIImage, to urlPath: URL) {
+        if let data = image.pngData() {
+            do {
+                if !FileManager.default.fileExists(atPath: urlPath.path) {
+                    try FileManager.default.createDirectory(atPath: urlPath.path, withIntermediateDirectories: true, attributes: nil)
+                }
+                try data.write(to: urlPath.appendingPathComponent(UUID().uuidString))
+            } catch {
+                print(error)
+            }
         }
     }
 }

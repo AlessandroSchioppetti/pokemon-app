@@ -7,7 +7,7 @@
 
 import Foundation
 
-public extension FileManager {
+public extension URL {
     static var applicationSupportDirectory: URL {
         let fileManager = FileManager.default
         let url = fileManager.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0]
@@ -18,6 +18,10 @@ public extension FileManager {
     }
     
     static var pokemonUrlPath: URL {
-        FileManager.applicationSupportDirectory.appendingPathComponent(FileName.pokemon.name)
+        URL.applicationSupportDirectory.appendingPathComponent("pokemon.json")
+    }
+    
+    static var pokemonImages: URL {
+        URL.applicationSupportDirectory.appendingPathComponent("Images")
     }
 }

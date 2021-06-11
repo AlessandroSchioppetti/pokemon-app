@@ -17,14 +17,3 @@ public enum Api {
         }
     }
 }
-
-public enum FileName {
-    case pokemon
-    
-    var name: String {
-        switch self {
-        case .pokemon:
-            return "pokemon.json"
-        }
-    }
-}
