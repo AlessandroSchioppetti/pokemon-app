@@ -10,6 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
     
     var elements: [PokemonViewModel] = []
+    var pokemonList: [Pokemon] = []
     
     var collectionView: UICollectionView?
     var layout: UICollectionViewFlowLayout {
@@ -22,7 +23,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        setupCollectionView()
         setupNavigation()
     }
     
@@ -37,8 +38,9 @@ private extension HomeViewController {
     func readPokemon() {
         let result = PokemonService.shared.readPokemon()
         switch result {
-        case .success(let pkList):
-            generateViewModel(from: pkList)
+        case .success(let pokemonList):
+            self.pokemonList = pokemonList
+            generateViewModel(from: pokemonList)
         case .failure(let error):
             showAlert(error)
         }
@@ -59,7 +61,7 @@ private extension HomeViewController {
         reloadData()
     }
     
-    func setupView() {
+    func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         guard let collectionView = collectionView else { return }
 
@@ -115,6 +117,8 @@ extension HomeViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(#function)
+        guard let name = elements[indexPath.row].model?.name,
+              let index = pokemonList.firstIndex(where: { $0.name == name }) else { return }
+        navigationController?.pushViewController(PokemonDetailViewController(pokemon: pokemonList[index]), animated: true)
     }
 }
