@@ -27,7 +27,6 @@ class PokemonService {
                     case .success((let allPkImages, let allPkProfileImages)):
                         PokemonService.shared.writePkImges(allPkImages: allPkImages,
                                                            allPkProfileImages: allPkProfileImages)
-                        self.pokemonList = list
                         completion(nil)
                     case .failure(let error):
                         completion(error)
@@ -40,14 +39,36 @@ class PokemonService {
         }
     }
     
-    func getPokemonList() -> [Pokemon] {
-        pokemonList
+    func readPokemon() -> Result<[Pokemon],Error> {
+        do {
+            let decoder = JSONDecoder()
+            let data = try Data(contentsOf: URL.pokemonUrlPath)
+            let decodedData = try decoder.decode([Pokemon].self, from: data)
+            return .success(decodedData)
+        } catch {
+            return .failure(error)
+        }
+    }
+    
+    func readPkImages(from url: URL) -> Result<[UIImage],Error> {
+        var images = [UIImage]()
+        do {
+            let urls = try FileManager.default.contentsOfDirectory(at: url,
+                                                                   includingPropertiesForKeys: nil,
+                                                                   options: .skipsHiddenFiles)
+            try urls.forEach {
+                let data = try Data(contentsOf: $0)
+                images.append(UIImage(data: data) ?? UIImage(named: "not_found") ?? UIImage())
+            }
+            return .success(images)
+        } catch {
+            return .failure(error)
+        }
     }
 }
 
 // MARK: - private
 private extension PokemonService {
-    // MARK: - network operation
     func getPokemon(completion: @escaping getPkCompletion) {
         ApiService.shared.getCodable(ofType: PokemonPreviewList.self, from: Api.pokemonList.path) { result in
             
@@ -117,7 +138,6 @@ private extension PokemonService {
         }
     }
     
-    // MARK: - local operation
     func writePokemon(pokemonList: [Pokemon]) -> Error? {
         do {
             let encoder = JSONEncoder()
@@ -126,17 +146,6 @@ private extension PokemonService {
             return nil
         } catch {
             return error
-        }
-    }
-    
-    func readPokemon() -> Result<[Pokemon],Error> {
-        do {
-            let decoder = JSONDecoder()
-            let data = try Data(contentsOf: URL.pokemonUrlPath)
-            let decodedData = try decoder.decode([Pokemon].self, from: data)
-            return .success(decodedData)
-        } catch {
-            return .failure(error)
         }
     }
     

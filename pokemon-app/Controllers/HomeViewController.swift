@@ -24,19 +24,41 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         setupNavigation()
-        elements = [.init(model: .init(name: "sperow", imageString: "pokemon_logo")),
-                    .init(model: .init(name: "pikaciu", imageString: "pokemon_logo"))]
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        readPokemon()
     }
 }
 
 // MARK: - private
 private extension HomeViewController {
     func readPokemon() {
-        
+        let result = PokemonService.shared.readPokemon()
+        switch result {
+        case .success(let pkList):
+            generateViewModel(from: pkList)
+        case .failure(let error):
+            showAlert(error)
+        }
     }
+    
+    func generateViewModel(from pkList: [Pokemon]) {
+        elements = pkList.map {
+            let url = URL.pokemonImages.appendingPathComponent($0.name).appendingPathComponent("profileImages")
+            let result = PokemonService.shared.readPkImages(from: url)
+            switch result {
+            case .success(let images):
+                return PokemonViewModel(model: .init(name: $0.name, image: images.first))
+            case .failure(let error):
+                showAlert(error)
+                return PokemonViewModel(model: .init(name: $0.name, image: UIImage(named: "not_found")))
+            }
+        }
+        reloadData()
+    }
+    
     func setupView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         guard let collectionView = collectionView else { return }
@@ -61,6 +83,18 @@ private extension HomeViewController {
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+        }
+    }
+    
+    func showAlert(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
