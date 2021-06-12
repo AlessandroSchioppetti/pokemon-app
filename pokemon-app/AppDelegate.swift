@@ -27,7 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 // MARK: - SplashViewControllerDelegate
 extension AppDelegate: SplashViewControllerDelegate {
     func didFinishLoading() {
-        window?.rootViewController = HomeViewController()
+        window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
     }
 }
 
