@@ -58,7 +58,7 @@ class PokemonService {
                                                                    options: .skipsHiddenFiles)
             try urls.forEach {
                 let data = try Data(contentsOf: $0)
-                images.append(UIImage(data: data) ?? UIImage(named: "not_found") ?? UIImage())
+                images.append(UIImage(data: data) ?? UIImage())
             }
             return .success(images)
         } catch {

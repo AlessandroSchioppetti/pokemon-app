@@ -21,6 +21,8 @@ class PokemonViewModel: BaseViewModel<PokemonCell, PokemonModel> {
         view.imageView.contentMode = .scaleAspectFit
         view.imageView.image = model.image ?? UIImage()
         
+        view.imageView.makeRounded(borderWidth: 1.0, borderColor: ColorLayout.darkYellow, cornerRadius: 50.0)
+        
         view.titleLabel.configure(with: LabelLayout(text: model.name,
                                                     font: UIFont.systemFont(ofSize: 22, weight: .heavy),
                                                     adjustsFontSizeToFitWidth: true))

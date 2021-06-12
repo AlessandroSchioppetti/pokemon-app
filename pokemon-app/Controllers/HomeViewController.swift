@@ -29,13 +29,13 @@ class HomeViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        readPokemon()
+        setupCollectionDataSource()
     }
 }
 
 // MARK: - private
 private extension HomeViewController {
-    func readPokemon() {
+    func setupCollectionDataSource() {
         let result = PokemonService.shared.readPokemon()
         switch result {
         case .success(let pokemonList):
@@ -55,7 +55,7 @@ private extension HomeViewController {
                 return PokemonViewModel(model: .init(name: $0.name, image: images.first))
             case .failure(let error):
                 showAlert(error)
-                return PokemonViewModel(model: .init(name: $0.name, image: UIImage(named: "not_found")))
+                return PokemonViewModel(model: .init(name: $0.name, image: UIImage()))
             }
         }
         reloadData()

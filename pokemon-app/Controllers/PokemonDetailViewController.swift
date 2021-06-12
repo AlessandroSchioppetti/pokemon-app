@@ -23,7 +23,7 @@ class PokemonDetailViewController: UIViewController {
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = CGSize(width: view.frame.width, height: 1_000)
+        layout.estimatedItemSize = CGSize(width: view.frame.width, height: 1_000)
         return layout
     }
     
@@ -32,6 +32,7 @@ class PokemonDetailViewController: UIViewController {
         setupCollectionView()
         setupNavigation()
         scaffolding()
+        setupCollectionDataSource()
     }
     
     public init(pokemon: Pokemon) {
@@ -46,6 +47,29 @@ class PokemonDetailViewController: UIViewController {
 
 // MARK: - private
 private extension PokemonDetailViewController {
+    func setupCollectionDataSource() {
+        let profileImageViewModel = ImageViewModel(model: ImageModel(image: getProfileImage(),
+                                                                     height: 300,
+                                                                     width: 300,
+                                                                     cornerRadius: 150,
+                                                                     borderWidth: 2.0,
+                                                                     borderColor: ColorLayout.darkYellow))
+        
+        elements[Sections.profileImage.rawValue] = [profileImageViewModel]
+        reloadData()
+    }
+    
+    func getProfileImage() -> UIImage {
+        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent("profileImages"))
+        switch result {
+        case .success(let images):
+            return images.first ?? UIImage()
+        case .failure(let error):
+            showAlert(error)
+            return UIImage()
+        }
+    }
+    
     func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         guard let collectionView = collectionView else { return }
@@ -53,7 +77,7 @@ private extension PokemonDetailViewController {
         collectionView.backgroundColor = ColorLayout.backgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(PokemonCell.self)
+        collectionView.register(ImageCell.self)
 
         view.add(collectionView)
         NSLayoutConstraint.activate([
@@ -76,6 +100,18 @@ private extension PokemonDetailViewController {
     
     func scaffolding() {
         Sections.allCases.forEach { _ in self.elements.append([]) }
+    }
+    
+    func showAlert(_ error: Error) {
+        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func reloadData() {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
+        }
     }
     
     // MARK: objc
