@@ -89,13 +89,17 @@ private extension PokemonDetailViewController {
     }
     
     func setupNavigation() {
-        
         let backButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "img_arrow_left"),
                                                           style: .plain,
                                                           target: self,
                                                           action: #selector(backButtonPressed))
         backButton.tintColor = ColorLayout.black
-        self.navigationItem.leftBarButtonItem = backButton
+        
+        let titleLabel = UILabel()
+        titleLabel.configure(with: .init(text: pokemon.name, font: UIFont.systemFont(ofSize: 20, weight: .heavy), textColor: ColorLayout.baseTextColor, textAlignment: .center))
+        
+        navigationItem.titleView = titleLabel
+        navigationItem.leftBarButtonItem = backButton
     }
     
     func scaffolding() {
@@ -136,6 +140,14 @@ extension PokemonDetailViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewModel.cellIdentifier, for: indexPath)
         viewModel.configure(view: cell)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        if Sections.profileImage.rawValue == section {
+            return .init(top: 30, left: 0, bottom: 0, right: 0)
+        } else {
+            return .zero
+        }
     }
 }
 
