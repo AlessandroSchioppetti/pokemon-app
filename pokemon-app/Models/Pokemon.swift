@@ -21,7 +21,10 @@ struct Pokemon: Codable {
         case types
         case images = "sprites"
     }
-    
+}
+
+// MARK: - computedProperties
+extension Pokemon {
     public var allImages: [String] {
         return [images.front_default,
                 images.front_shiny,
@@ -32,6 +35,14 @@ struct Pokemon: Codable {
     
     public var typeList: [String] {
         return types.map { $0.type.name }
+    }
+    
+    public var statsList: [String] {
+        var stats = [String]()
+        self.stats.forEach {
+            stats.append("\($0.statDetail.name): \($0.value)")
+        }
+        return stats
     }
 }
 

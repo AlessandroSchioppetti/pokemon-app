@@ -64,8 +64,12 @@ private extension PokemonDetailViewController {
         let typesViewModel = PokemonInfoViewModel(model: .init(title: PokemonInfo.types.rawValue,
                                                                info: pokemon.typeList))
         
+        let statsViewModel = PokemonInfoViewModel(model: .init(title: PokemonInfo.stats.rawValue,
+                                                               info: pokemon.statsList))
+        
         elements[Sections.profileImage.rawValue] = [profileImageViewModel]
         elements[Sections.type.rawValue] = [typesViewModel]
+        elements[Sections.stat.rawValue] = [statsViewModel]
         reloadData()
     }
     
