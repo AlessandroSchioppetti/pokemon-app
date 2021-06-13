@@ -16,7 +16,6 @@ class PokemonViewModel: BaseViewModel<PokemonCell, PokemonModel> {
     override public func configure() {
         super.configure()
         guard let view = view, let model = model else { return }
-        
         view.imageView.layer.cornerRadius = 20.0
         view.imageView.contentMode = .scaleAspectFit
         view.imageView.image = model.image ?? UIImage()

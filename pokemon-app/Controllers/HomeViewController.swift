@@ -7,19 +7,9 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: CollectionViewController {
     
-    var elements: [PokemonViewModel] = []
     var pokemonList: [Pokemon] = []
-    
-    var collectionView: UICollectionView?
-    var layout: UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 0
-        layout.itemSize = CGSize(width: view.frame.width, height: 150)
-        return layout
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +20,14 @@ class HomeViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupCollectionDataSource()
+    }
+    
+    // MARK: - collectionViewDelegate
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModel = elements[indexPath.section][indexPath.row] as? PokemonViewModel,
+              let name = viewModel.model?.name,
+              let index = pokemonList.firstIndex(where: { $0.name == name }) else { return }
+        navigationController?.pushViewController(PokemonDetailViewController(pokemon: pokemonList[index]), animated: true)
     }
 }
 
@@ -47,7 +45,7 @@ private extension HomeViewController {
     }
     
     func generateViewModel(from pkList: [Pokemon]) {
-        elements = pkList.map {
+        elements = [pkList.map {
             let url = URL.pokemonImages.appendingPathComponent($0.name).appendingPathComponent(Dir.profileImage.rawValue)
             let result = PokemonService.shared.readPkImages(from: url)
             switch result {
@@ -57,26 +55,14 @@ private extension HomeViewController {
                 showAlert(error)
                 return PokemonViewModel(model: .init(name: $0.name, image: UIImage()))
             }
-        }
+        }]
         reloadData()
     }
     
     func setupCollectionView() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        guard let collectionView = collectionView else { return }
-
         collectionView.backgroundColor = ColorLayout.backgroundColor
-        collectionView.dataSource = self
-        collectionView.delegate = self
+        collectionViewLayout.itemSize = CGSize(width: view.frame.width, height: 150)
         collectionView.register(PokemonCell.self)
-
-        view.add(collectionView)
-        NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
     }
     
     func setupNavigation() {
@@ -85,40 +71,5 @@ private extension HomeViewController {
         let imageView = UIImageView(image:logo)
         imageView.contentMode = .scaleAspectFit
         self.navigationItem.titleView = imageView
-    }
-    
-    func reloadData() {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
-    }
-    
-    func showAlert(_ error: Error) {
-        let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        elements.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let viewModel = elements[indexPath.row]
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: viewModel.cellIdentifier, for: indexPath)
-        viewModel.configure(view: cell)
-        return cell
-    }
-}
-
-// MARK: - UICollectionViewDelegate
-extension HomeViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let name = elements[indexPath.row].model?.name,
-              let index = pokemonList.firstIndex(where: { $0.name == name }) else { return }
-        navigationController?.pushViewController(PokemonDetailViewController(pokemon: pokemonList[index]), animated: true)
     }
 }

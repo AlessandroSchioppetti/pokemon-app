@@ -40,6 +40,7 @@
 		CAF087012676365800AAC17B /* GalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF087002676365800AAC17B /* GalleryCell.swift */; };
 		CAF087092676366B00AAC17B /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF087082676366B00AAC17B /* GalleryViewModel.swift */; };
 		CAF0871126763DCE00AAC17B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF0871026763DCE00AAC17B /* PaddingLabel.swift */; };
+		CAF0871726764DC500AAC17B /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF0871626764DC500AAC17B /* CollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		CAF087002676365800AAC17B /* GalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
 		CAF087082676366B00AAC17B /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
 		CAF0871026763DCE00AAC17B /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		CAF0871626764DC500AAC17B /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 		CAB6A2B2267120BA008094FD /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CAF0871526764DB400AAC17B /* Common */,
 				CAF0866F2673D4AF00AAC17B /* SplashViewController.swift */,
 				CAF086852673DEDB00AAC17B /* HomeViewController.swift */,
 				CAF086CC267506F600AAC17B /* PokemonDetailViewController.swift */,
@@ -297,6 +300,14 @@
 				CAF087082676366B00AAC17B /* GalleryViewModel.swift */,
 			);
 			path = Gallery;
+			sourceTree = "<group>";
+		};
+		CAF0871526764DB400AAC17B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				CAF0871626764DC500AAC17B /* CollectionViewController.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,6 +455,7 @@
 				CAB6A2C4267127E7008094FD /* Pokemon.swift in Sources */,
 				CAF0868E2674B77F00AAC17B /* BaseViewModel.swift in Sources */,
 				CAF086A52674BBAC00AAC17B /* PokemonViewModel.swift in Sources */,
+				CAF0871726764DC500AAC17B /* CollectionViewController.swift in Sources */,
 				CAB6A2DA2672479E008094FD /* Constants.swift in Sources */,
 				CAB6A278267113AF008094FD /* AppDelegate.swift in Sources */,
 				CAF087012676365800AAC17B /* GalleryCell.swift in Sources */,
