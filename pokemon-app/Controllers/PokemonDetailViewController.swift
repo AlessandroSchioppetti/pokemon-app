@@ -92,7 +92,7 @@ private extension PokemonDetailViewController {
     }
     
     func getProfileImage() -> UIImage {
-        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent("profileImages"))
+        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent(Dir.profileImage.rawValue))
         switch result {
         case .success(let images):
             return images.first ?? UIImage()
@@ -103,7 +103,7 @@ private extension PokemonDetailViewController {
     }
     
     func getGalleryImages() -> [UIImage] {
-        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent("frontBackImages"))
+        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent(Dir.galleryImages.rawValue))
         switch result {
         case .success(let images):
             return images

@@ -48,7 +48,7 @@ private extension HomeViewController {
     
     func generateViewModel(from pkList: [Pokemon]) {
         elements = pkList.map {
-            let url = URL.pokemonImages.appendingPathComponent($0.name).appendingPathComponent("profileImages")
+            let url = URL.pokemonImages.appendingPathComponent($0.name).appendingPathComponent(Dir.profileImage.rawValue)
             let result = PokemonService.shared.readPkImages(from: url)
             switch result {
             case .success(let images):

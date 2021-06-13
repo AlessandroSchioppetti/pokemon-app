@@ -13,7 +13,12 @@ public enum Api {
     var path: String {
         switch self {
         case .pokemonList:
-            return "https://pokeapi.co/api/v2/pokemon?offset=20&limit=5"
+            return "https://pokeapi.co/api/v2/pokemon?offset=20&limit=10"
         }
     }
+}
+
+public enum Dir: String {
+    case galleryImages = "GalleryImages"
+    case profileImage = "ProfileImages"
 }

@@ -25,7 +25,7 @@ class PokemonService {
                 PokemonService.shared.getPokemonImages(from: list) { result in
                     switch result {
                     case .success((let allPkImages, let allPkProfileImages)):
-                        PokemonService.shared.writePkImges(allPkImages: allPkImages,
+                        PokemonService.shared.writePkImges(allPkGalleryImageList: allPkImages,
                                                            allPkProfileImages: allPkProfileImages)
                         completion(nil)
                     case .failure(let error):
@@ -102,7 +102,7 @@ private extension PokemonService {
     }
     
     func getPokemonImages(from pokemonList: [Pokemon], completion: @escaping getPkImagesCompletion) {
-        var pkImageList: [String: [UIImage]] = [:]
+        var pkGalleryImageList: [String: [UIImage]] = [:]
         var pkImageProfileList: [String: UIImage] = [:]
         
         let imageGroup = DispatchGroup()
@@ -118,10 +118,10 @@ private extension PokemonService {
                             if urlString == pokemon.images.other.prettyImage.front_default {
                                 pkImageProfileList[pokemon.name] = image
                             } else {
-                                if let _ = pkImageList[pokemon.name] {
-                                    pkImageList[pokemon.name]?.append(image)
+                                if let _ = pkGalleryImageList[pokemon.name] {
+                                    pkGalleryImageList[pokemon.name]?.append(image)
                                 } else {
-                                    pkImageList[pokemon.name] = [image]
+                                    pkGalleryImageList[pokemon.name] = [image]
                                 }
                             }
                             imageGroup.leave()
@@ -134,7 +134,7 @@ private extension PokemonService {
             }
         }
         imageGroup.notify(queue: .main) {
-            return completion(.success((pkImageList, pkImageProfileList)))
+            return completion(.success((pkGalleryImageList, pkImageProfileList)))
         }
     }
     
@@ -149,14 +149,14 @@ private extension PokemonService {
         }
     }
     
-    func writePkImges(allPkImages: [String: [UIImage]], allPkProfileImages: [String: UIImage]) {
-        allPkImages.forEach { dict in
+    func writePkImges(allPkGalleryImageList: [String: [UIImage]], allPkProfileImages: [String: UIImage]) {
+        allPkGalleryImageList.forEach { dict in
             dict.value.forEach { image in
-                writeImage(image: image, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent("frontBackImages"))
+                writeImage(image: image, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent(Dir.galleryImages.rawValue))
             }
         }
         allPkProfileImages.forEach { dict in
-            writeImage(image: dict.value, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent("profileImages"))
+            writeImage(image: dict.value, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent(Dir.profileImage.rawValue))
         }
     }
     
