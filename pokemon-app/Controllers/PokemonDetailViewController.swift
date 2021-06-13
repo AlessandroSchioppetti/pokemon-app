@@ -15,11 +15,19 @@ class PokemonDetailViewController: UIViewController {
         case type
         case stat
         case gallery
-    }
-    
-    enum PokemonInfo: String {
-        case types = "Types"
-        case stats = "Stats"
+        
+        var title: String {
+            switch self {
+            case .type:
+                return "Types"
+            case .stat:
+                return "Stats"
+            case .gallery:
+                return "Gallery"
+            default:
+                return ""
+            }
+        }
     }
     
     var elements: [[AnyViewModel]] = []
@@ -61,15 +69,25 @@ private extension PokemonDetailViewController {
                                                                      borderWidth: 2.0,
                                                                      borderColor: ColorLayout.darkYellow))
         
-        let typesViewModel = PokemonInfoViewModel(model: .init(title: PokemonInfo.types.rawValue,
+        let typesViewModel = PokemonInfoViewModel(model: .init(title: Sections.type.title,
                                                                info: pokemon.typeList))
         
-        let statsViewModel = PokemonInfoViewModel(model: .init(title: PokemonInfo.stats.rawValue,
+        let statsViewModel = PokemonInfoViewModel(model: .init(title: Sections.type.title,
                                                                info: pokemon.statsList))
+        
+        let imageModelList: [ImageModel] = getGalleryImages().map { ImageModel(image: $0,
+                                                                               height: 120,
+                                                                               width: 120,
+                                                                               cornerRadius: 60,
+                                                                               borderWidth: 1,
+                                                                               borderColor: ColorLayout.darkYellow) }
+        let galleryViewModel = GalleryViewModel(model: .init(titleName: Sections.gallery.title,
+                                                             imageModelList: imageModelList))
         
         elements[Sections.profileImage.rawValue] = [profileImageViewModel]
         elements[Sections.type.rawValue] = [typesViewModel]
         elements[Sections.stat.rawValue] = [statsViewModel]
+        elements[Sections.gallery.rawValue] = [galleryViewModel]
         reloadData()
     }
     
@@ -84,16 +102,28 @@ private extension PokemonDetailViewController {
         }
     }
     
+    func getGalleryImages() -> [UIImage] {
+        let result = PokemonService.shared.readPkImages(from: URL.pokemonImages.appendingPathComponent(pokemon.name).appendingPathComponent("frontBackImages"))
+        switch result {
+        case .success(let images):
+            return images
+        case .failure(let error):
+            showAlert(error)
+            return []
+        }
+    }
+    
     func setupCollectionView() {
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         guard let collectionView = collectionView else { return }
-
+        
         collectionView.backgroundColor = ColorLayout.backgroundColor
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ImageCell.self)
         collectionView.register(PokemonInfoCell.self)
-
+        collectionView.register(GalleryCell.self)
+        
         view.add(collectionView)
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -140,8 +170,8 @@ private extension PokemonDetailViewController {
     }
 }
 
-// MARK: - UICollectionViewDataSource
-extension PokemonDetailViewController: UICollectionViewDataSource {
+// MARK: - UICollectionView dataSource/delegate
+extension PokemonDetailViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         elements.count
     }
@@ -161,8 +191,5 @@ extension PokemonDetailViewController: UICollectionViewDataSource {
         return .init(top: 30, left: 0, bottom: 0, right: 0)
     }
 }
-
-// MARK: - UICollectionViewDelegate
-extension PokemonDetailViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {}
 
 

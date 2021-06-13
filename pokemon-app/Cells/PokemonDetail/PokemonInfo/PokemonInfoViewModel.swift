@@ -23,7 +23,7 @@ class PokemonInfoViewModel: BaseViewModel<PokemonInfoCell, PokemonInfoModel> {
             let infoLabel = UILabel()
             infoLabel.configure(with: .init(text: $0, font: .systemFont(ofSize: 20, weight: .medium), textColor: ColorLayout.baseTextColor, textAlignment: .center))
             infoLabel.translatesAutoresizingMaskIntoConstraints = false
-            infoLabel.heightAnchor.constraint(equalToConstant: 60.0).isActive = true
+            infoLabel.heightAnchor.constraint(equalToConstant: view.labelHeight).isActive = true
             view.infoStackView.addArrangedSubview(infoLabel)
         }
     }

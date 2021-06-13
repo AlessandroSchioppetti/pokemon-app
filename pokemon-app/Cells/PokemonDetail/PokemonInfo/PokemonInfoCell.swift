@@ -8,16 +8,10 @@
 import UIKit
 
 class PokemonInfoCell: UICollectionViewCell {
-    
-    class PaddingLabel: UILabel {
-        override func drawText(in rect: CGRect) {
-            let insets = UIEdgeInsets(top: 0, left: 25, bottom: 0, right: 0)
-            super.drawText(in: rect.inset(by: insets))
-        }
-    }
-    
     let titleLabel = PaddingLabel()
     let infoStackView = UIStackView()
+    
+    let labelHeight: CGFloat = 50.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -49,7 +43,7 @@ private extension PokemonInfoCell {
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 60.0),
+            titleLabel.heightAnchor.constraint(equalToConstant: labelHeight),
             
             infoStackView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             infoStackView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),

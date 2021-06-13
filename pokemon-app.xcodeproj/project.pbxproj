@@ -37,6 +37,9 @@
 		CAF086E726752CF500AAC17B /* UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF086E626752CF500AAC17B /* UIImage.swift */; };
 		CAF086ED2676153500AAC17B /* PokemonInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF086EC2676153500AAC17B /* PokemonInfoCell.swift */; };
 		CAF086FB267615AA00AAC17B /* PokemonInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF086FA267615AA00AAC17B /* PokemonInfoViewModel.swift */; };
+		CAF087012676365800AAC17B /* GalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF087002676365800AAC17B /* GalleryCell.swift */; };
+		CAF087092676366B00AAC17B /* GalleryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF087082676366B00AAC17B /* GalleryViewModel.swift */; };
+		CAF0871126763DCE00AAC17B /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF0871026763DCE00AAC17B /* PaddingLabel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -93,6 +96,9 @@
 		CAF086E626752CF500AAC17B /* UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImage.swift; sourceTree = "<group>"; };
 		CAF086EC2676153500AAC17B /* PokemonInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonInfoCell.swift; sourceTree = "<group>"; };
 		CAF086FA267615AA00AAC17B /* PokemonInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonInfoViewModel.swift; sourceTree = "<group>"; };
+		CAF087002676365800AAC17B /* GalleryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
+		CAF087082676366B00AAC17B /* GalleryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryViewModel.swift; sourceTree = "<group>"; };
+		CAF0871026763DCE00AAC17B /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +239,7 @@
 			children = (
 				CAF0868D2674B77F00AAC17B /* BaseViewModel.swift */,
 				CAF086952674B79B00AAC17B /* ViewModel.swift */,
+				CAF0871026763DCE00AAC17B /* PaddingLabel.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -258,6 +265,7 @@
 		CAF086D726751C5400AAC17B /* PokemonDetail */ = {
 			isa = PBXGroup;
 			children = (
+				CAF086FF2676364A00AAC17B /* Gallery */,
 				CAF086EB267614FB00AAC17B /* PokemonInfo */,
 				CAF086D826751C6100AAC17B /* Image */,
 			);
@@ -280,6 +288,15 @@
 				CAF086FA267615AA00AAC17B /* PokemonInfoViewModel.swift */,
 			);
 			path = PokemonInfo;
+			sourceTree = "<group>";
+		};
+		CAF086FF2676364A00AAC17B /* Gallery */ = {
+			isa = PBXGroup;
+			children = (
+				CAF087002676365800AAC17B /* GalleryCell.swift */,
+				CAF087082676366B00AAC17B /* GalleryViewModel.swift */,
+			);
+			path = Gallery;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -420,6 +437,7 @@
 				CAF086ED2676153500AAC17B /* PokemonInfoCell.swift in Sources */,
 				CAF086DA26751C8D00AAC17B /* ImageCell.swift in Sources */,
 				CAF0869D2674BB9F00AAC17B /* PokemonCell.swift in Sources */,
+				CAF0871126763DCE00AAC17B /* PaddingLabel.swift in Sources */,
 				CAF086FB267615AA00AAC17B /* PokemonInfoViewModel.swift in Sources */,
 				CAF086702673D4AF00AAC17B /* SplashViewController.swift in Sources */,
 				CAF086962674B79B00AAC17B /* ViewModel.swift in Sources */,
@@ -428,6 +446,7 @@
 				CAF086A52674BBAC00AAC17B /* PokemonViewModel.swift in Sources */,
 				CAB6A2DA2672479E008094FD /* Constants.swift in Sources */,
 				CAB6A278267113AF008094FD /* AppDelegate.swift in Sources */,
+				CAF087012676365800AAC17B /* GalleryCell.swift in Sources */,
 				CAB6A2EC26726AAF008094FD /* URL.swift in Sources */,
 				CAF086B82674C1F900AAC17B /* UICollectionViewCell.swift in Sources */,
 				CAB6A2B72671211E008094FD /* PokemonPreviewList.swift in Sources */,
@@ -437,6 +456,7 @@
 				CAF086C02674C51D00AAC17B /* LabelLayout.swift in Sources */,
 				CAF086E226751C9800AAC17B /* ImageViewModel.swift in Sources */,
 				CAF086B32674C11300AAC17B /* UICollectionView.swift in Sources */,
+				CAF087092676366B00AAC17B /* GalleryViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
