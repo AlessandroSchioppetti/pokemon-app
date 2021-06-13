@@ -26,18 +26,18 @@ class PokemonCell: UICollectionViewCell {
 // MARK: - private
 private extension PokemonCell {
     func setupView() {
-        add(imageView)
-        add(titleLabel)
+        contentView.add(imageView)
+        contentView.add(titleLabel)
         
         NSLayoutConstraint.activate([
             imageView.heightAnchor.constraint(equalToConstant: 100),
             imageView.widthAnchor.constraint(equalToConstant: 100),
-            imageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            imageView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
+            imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             titleLabel.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: padding),
         ])
     }

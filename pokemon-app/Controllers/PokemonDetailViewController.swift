@@ -17,12 +17,18 @@ class PokemonDetailViewController: UIViewController {
         case gallery
     }
     
+    enum PokemonInfo: String {
+        case types = "Types"
+        case stats = "Stats"
+    }
+    
     var elements: [[AnyViewModel]] = []
     
     var collectionView: UICollectionView?
     var layout: UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 30.0
         layout.estimatedItemSize = CGSize(width: view.frame.width, height: 1_000)
         return layout
     }
@@ -55,7 +61,11 @@ private extension PokemonDetailViewController {
                                                                      borderWidth: 2.0,
                                                                      borderColor: ColorLayout.darkYellow))
         
+        let typesViewModel = PokemonInfoViewModel(model: .init(title: PokemonInfo.types.rawValue,
+                                                               info: pokemon.typeList))
+        
         elements[Sections.profileImage.rawValue] = [profileImageViewModel]
+        elements[Sections.type.rawValue] = [typesViewModel]
         reloadData()
     }
     
@@ -78,6 +88,7 @@ private extension PokemonDetailViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(ImageCell.self)
+        collectionView.register(PokemonInfoCell.self)
 
         view.add(collectionView)
         NSLayoutConstraint.activate([
@@ -96,7 +107,7 @@ private extension PokemonDetailViewController {
         backButton.tintColor = ColorLayout.black
         
         let titleLabel = UILabel()
-        titleLabel.configure(with: .init(text: pokemon.name, font: UIFont.systemFont(ofSize: 20, weight: .heavy), textColor: ColorLayout.baseTextColor, textAlignment: .center))
+        titleLabel.configure(with: .init(text: pokemon.name, font: UIFont.systemFont(ofSize: 25, weight: .heavy), textColor: ColorLayout.baseTextColor, textAlignment: .center))
         
         navigationItem.titleView = titleLabel
         navigationItem.leftBarButtonItem = backButton
@@ -143,11 +154,7 @@ extension PokemonDetailViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        if Sections.profileImage.rawValue == section {
-            return .init(top: 30, left: 0, bottom: 0, right: 0)
-        } else {
-            return .zero
-        }
+        return .init(top: 30, left: 0, bottom: 0, right: 0)
     }
 }
 

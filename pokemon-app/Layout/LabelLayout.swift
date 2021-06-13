@@ -13,6 +13,7 @@ class LabelLayout {
     var textColor: UIColor
     var textAlignment: NSTextAlignment
     var numberOfLines: Int
+    var backgroundColor: UIColor
     var adjustsFontSizeToFitWidth: Bool
     
     init(text: String? = nil,
@@ -20,6 +21,7 @@ class LabelLayout {
          textColor: UIColor = ColorLayout.baseTextColor,
          textAlignment: NSTextAlignment = NSTextAlignment.center,
          numberOflines: Int = 1,
+         backgroundColor: UIColor = .clear,
          adjustsFontSizeToFitWidth: Bool = false) {
         
         self.text = text
@@ -27,6 +29,7 @@ class LabelLayout {
         self.textColor = textColor
         self.textAlignment = textAlignment
         self.numberOfLines = numberOflines
+        self.backgroundColor = backgroundColor
         self.adjustsFontSizeToFitWidth = adjustsFontSizeToFitWidth
     }
 }
@@ -38,6 +41,7 @@ extension UILabel {
         textColor = labelLayout.textColor
         textAlignment = labelLayout.textAlignment
         numberOfLines = labelLayout.numberOfLines
+        backgroundColor = labelLayout.backgroundColor
         adjustsFontSizeToFitWidth = labelLayout.adjustsFontSizeToFitWidth
     }
 }

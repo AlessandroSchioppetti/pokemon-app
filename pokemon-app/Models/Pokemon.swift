@@ -29,6 +29,10 @@ struct Pokemon: Codable {
                 images.back_shiny,
                 images.other.prettyImage.front_default]
     }
+    
+    public var typeList: [String] {
+        return types.map { $0.type.name }
+    }
 }
 
 // MARK: - Stat

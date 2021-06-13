@@ -34,7 +34,6 @@ class ImageViewModel: BaseViewModel<ImageCell, ImageModel> {
     override public func configure() {
         super.configure()
         guard let view = view, let model = model else { return }
-        
         view.imageView.contentMode = .scaleAspectFit
         view.imageView.image = model.image
         
