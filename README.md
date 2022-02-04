@@ -3,14 +3,13 @@ pokemon list detail app
 
 Struttura:
 
-All'avvio dell'app faccio un controllo: viene cercato in memoria se sono già presenti i dati. in caso affermativo, con un breve delay lascio vedere comunque lo splashController per poi atterrare sulla home. in caso contrario effettuto le chiamate di rete visualizzando un hud di caricamento nella splash e salvo tutto in locale per cosi avere a disposizione per tutti gli avvi seguenti i dati senza la necessità di avere una connessione. in questo frangente di tempo vengono scaricati i dati da API. parso e salvo in un file json locale solo i dati che poi vado effettivamente a visualizzare. salvo anche tutte le immagini dei pokemon in cartelle relative. per ogni pokemon ho salvato un'immagine di "profilo" di dimensione piu grnade e 4 immagini piu piccole che sono il fronte/retro default e dell'evoluzione pokemon (gallery)
+Per far si che l'app possa funzionare anche nell'eventualità che non ci fosse connessione, all'avvio dell'app faccio un controllo: viene cercato in memoria se sono già presenti i dati dei pokemon (precedentemente scaricati). in caso affermativo, con un breve delay lascio comunque vedere lo splashController per poi atterrare sulla home. in caso contrario (quindi non ho nessun dato in memoria relativo ai pokemon) effettuto le chiamate di rete in sequenza, visualizzando un hud di caricamento nella splash in quel frangente di tempo, e salvo poi tutto in locale per cosi avere a disposizione per tutti gli avvi seguenti i dati senza la necessità di avere una connessione. una volta scaricati i dati, parso e salvo in un file json locale solo i dati che poi vado effettivamente a visualizzare. salvo anche tutte le immagini dei pokemon in cartelle relative su dispositivo locale. per ogni pokemon ho salvato un'immagine di "profilo" di dimensione piu grande, e 4 immagini piu piccole che sono il fronte/retro default dell'evoluzione pokemon (gallery)
 
-Nella home (lista pokemon) e nel dettaglio pokemon, tutti i dati vengono letti dal json locale, mentre le immagini dai percorsi delle cartelle relative.
+Nella home (lista pokemon) e nel dettaglio pokemon, tutti i dati vengono letti dal json locale, mentre le immagini dai rispettivi percorsi delle cartelle.
 ho strutturato i percorsi nel seguente modo: 
 
 applicationSupport/Images/{pokemonName}/ProfileImage/...
 applicationSupport/Images/{pokemonName}/GalleryImage/...
 
-Come da istruzioni ho cercato di non usare librerie esterne, fatta eccezion di due file di classi che sono rispettivamente: BaseViewModel, ViewModel.
+fatta eccezion di due file di classi che sono rispettivamente "BaseViewModel" e "ViewModel" il codice è stato interamente scritto come da istruzioni senza l'uso e l'appoggio a librerie esterne.
 
-*per problemi con xcode sono riuscito a testare l'app solo da simulatore e non su device fisico.
