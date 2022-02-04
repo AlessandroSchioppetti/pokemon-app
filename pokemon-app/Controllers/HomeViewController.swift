@@ -8,7 +8,6 @@
 import UIKit
 
 class HomeViewController: CollectionViewController {
-    
     var pokemonList: [Pokemon] = []
     
     override func viewDidLoad() {
@@ -26,8 +25,8 @@ class HomeViewController: CollectionViewController {
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let viewModel = elements[indexPath.section][indexPath.row] as? PokemonViewModel,
               let name = viewModel.model?.name,
-              let index = pokemonList.firstIndex(where: { $0.name == name }) else { return }
-        navigationController?.pushViewController(PokemonDetailViewController(pokemon: pokemonList[index]), animated: true)
+              let pkTapped = pokemonList.first(where: { $0.name == name }) else { return }
+        navigationController?.pushViewController(PokemonDetailViewController(pokemon: pkTapped), animated: true)
     }
 }
 
