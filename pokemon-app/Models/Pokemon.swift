@@ -37,6 +37,10 @@ extension Pokemon {
         return types.map { $0.type.name }
     }
     
+    public var profileImage: String {
+        images.other.prettyImage.front_default
+    }
+    
     public var statsList: [String] {
         var stats = [String]()
         self.stats.forEach {

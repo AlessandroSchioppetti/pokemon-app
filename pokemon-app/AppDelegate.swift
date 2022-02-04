@@ -15,19 +15,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        let splashController: SplashViewController = SplashViewController()
-        splashController.delegate = self
+        let splashController: SplashViewController = SplashViewController {
+            self.window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
+        }
         
         window?.rootViewController = splashController
         window?.makeKeyAndVisible()
         return true
-    }
-}
-
-// MARK: - SplashViewControllerDelegate
-extension AppDelegate: SplashViewControllerDelegate {
-    func didFinishLoading() {
-        window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
     }
 }
 

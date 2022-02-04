@@ -122,10 +122,8 @@ private extension PokemonDetailViewController {
                                                           target: self,
                                                           action: #selector(backButtonPressed))
         backButton.tintColor = ColorLayout.black
-        
         let titleLabel = UILabel()
         titleLabel.configure(with: .init(text: pokemon.name, font: UIFont.systemFont(ofSize: 25, weight: .heavy), textColor: ColorLayout.baseTextColor, textAlignment: .center))
-        
         navigationItem.titleView = titleLabel
         navigationItem.leftBarButtonItem = backButton
     }

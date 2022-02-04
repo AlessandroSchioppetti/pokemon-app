@@ -7,15 +7,19 @@
 
 import UIKit
 
-protocol SplashViewControllerDelegate: class {
-    func didFinishLoading()
-}
-
 class SplashViewController: UIViewController {
-    weak var delegate: SplashViewControllerDelegate?
-    
+    let goToHome: () -> Void
     private let logoImageView = UIImageView()
     private let indicator: UIActivityIndicatorView = UIActivityIndicatorView()
+    
+    init(goToHome: @escaping () -> Void) {
+        self.goToHome = goToHome
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +55,7 @@ private extension SplashViewController {
     func loadDataIfNeeded() {
         if FileManager.default.fileExists(atPath: URL.applicationSupportDirectory.appendingPathComponent("Images").path) {
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.delegate?.didFinishLoading()
+                self.goToHome()
             }
         } else {
             loadData()
@@ -60,14 +64,15 @@ private extension SplashViewController {
     
     func loadData() {
         indicator.startAnimating()
-        PokemonService.shared.getAndSavePokemon { error in
+        PokemonService.shared.getAndSavePokemon { [weak self] error in
+            guard let self = self else { return }
             self.indicator.stopAnimating()
             if let error = error {
                 let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             } else {
-                self.delegate?.didFinishLoading()
+                self.goToHome()
             }
         }
     }

@@ -15,17 +15,17 @@ class PokemonService {
     private var pokemonList: [Pokemon] = []
     
     func getAndSavePokemon(completion: @escaping (Error?) -> Void) {
-        PokemonService.shared.getPokemon { result in
+        getPokemon { [weak self] result in
             switch result {
             case .success(let list):
-                if let error = PokemonService.shared.writePokemon(pokemonList: list) {
+                if let error = self?.writePokemon(pokemonList: list) {
                     completion(error)
                     return
                 }
-                PokemonService.shared.getPokemonImages(from: list) { result in
+                self?.getPokemonImages(from: list) { [weak self] result in
                     switch result {
                     case .success((let allPkImages, let allPkProfileImages)):
-                        PokemonService.shared.writePkImges(allPkGalleryImageList: allPkImages,
+                        self?.writePkImges(allPkGalleryImageList: allPkImages,
                                                            allPkProfileImages: allPkProfileImages)
                         completion(nil)
                     case .failure(let error):
@@ -115,7 +115,7 @@ private extension PokemonService {
                     switch result {
                     case .success(let image):
                         imageQueue.async {
-                            if urlString == pokemon.images.other.prettyImage.front_default {
+                            if urlString == pokemon.profileImage {
                                 pkImageProfileList[pokemon.name] = image
                             } else {
                                 if let _ = pkGalleryImageList[pokemon.name] {
@@ -149,7 +149,8 @@ private extension PokemonService {
         }
     }
     
-    func writePkImges(allPkGalleryImageList: [String: [UIImage]], allPkProfileImages: [String: UIImage]) {
+    func writePkImges(allPkGalleryImageList: [String: [UIImage]],
+                      allPkProfileImages: [String: UIImage]) {
         allPkGalleryImageList.forEach { dict in
             dict.value.forEach { image in
                 writeImage(image: image, to: URL.pokemonImages.appendingPathComponent(dict.key).appendingPathComponent(Dir.galleryImages.rawValue))
